@@ -4,16 +4,28 @@
 
 In order to use `triangle` mesh generator, the user could face this follow situations:
 
-| Is installed ... compilation? | `triangle` | feature `triangle` status | `petsc-complex` status |
-| :---------------------------- | :--------: | :-----------------------: | :--------------------: |
-| before (`automagicdepends`)   |   _Yes_    |            ✅             |           ✅           |
-| between (`makedepends`)       |   _Yes_    |            ❌             |           ✅           |
-| after (`optdepends`)          |    _No_    |            ✅             |           ✅           |
+| `triangle` was installed ... compilation | feature `triangle` for `petsc-complex` status | `petsc-complex` status |
+| :--------------------------------------- | :-------------------------------------------: | :--------------------: |
+| before (`automagicdepends`)              |                      ✅                       |           ✅           |
+| between (`makedepends`)                  |                      ❌                       |           ✅           |
+| after (`optdepends`)                     |                      ❌                       |           ✅           |
 
 **Therefore, `triangle` is a `makedepends` and an `optdepends`, but not an `automagicdepends`**.
 
+## [`hdf5-openmpi`](https://archlinux.org/packages/community/x86_64/hdf5-openmpi)
+
+In order to use `hdf5-openmpi` file format, the user could face this follow situations:
+
+| `hdf5-openmpi` was installed ... compilation | feature `hdf5-openmpi` for `petsc-complex` status | `petsc-complex` status |
+| :------------------------------------------- | :-----------------------------------------------: | :--------------------: |
+| before (`automagicdepends`)                  |                                                   |           ✅           |
+| between (`makedepends`)                      |                                                   |           ✅           |
+| after (`optdepends`)                         |                                                   |           ✅           |
+
+<!-- **Therefore, `hdf5-openmpi` is a `makedepends` and an `optdepends`, but not an `automagicdepends`**. -->
+
 > Side note:
 >
-> - `optdepends` means that `petsc-complex` is working fine, but if user requires a `foo-package` feature only must install it after installation (`python` bindings).
+> - `optdepends` means that `petsc-complex` is working fine, but if user requires a `foo-package` feature only must install it after installation (e.g. `python` bindings).
 > - `makedepends` means that `petsc-complex` is working fine and the `foo-package` is no longer required anymore (e.g. `cmake`)
-> - [`automagicdepends`](https://wiki.gentoo.org/wiki/Project:Quality_Assurance/Automagic_dependencies) (e.g.`openmpi`).
+> - [`automagicdepends`](https://wiki.gentoo.org/wiki/Project:Quality_Assurance/Automagic_dependencies) (e.g. `openmpi`).
