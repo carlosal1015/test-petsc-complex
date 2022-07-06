@@ -3,7 +3,6 @@ FROM ghcr.io/carlosal1015/aur/petsc-complex:latest
 ARG PACKAGES="\
   docker \
   git \
-  openssh \
   "
 
 RUN sudo pacman --needed --noconfirm --noprogressbar -Syyuq && \
