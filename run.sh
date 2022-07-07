@@ -1,3 +1,17 @@
+function install_openssh() {
+  sudo pacman --needed --noconfirm -Syyuq >/dev/null 2>&1
+  sudo pacman --needed --noconfirm -S openssh >/dev/null 2>&1
+}
+
+function extract_tutorial() {
+  export OMPI_MCA_opal_warn_on_missing_libcuda=0
+  export PETSC_DIR=/opt/petsc/linux-c-opt
+  export PYTHONPATH=${PETSC_DIR}/lib:${PYTHONPATH}
+  # export GITPOD_REPO_ROOT=${HOME}
+  local INPUT=${GITPOD_REPO_ROOT}/extracted
+  mkdir -p ${INPUT} && cp -R ${PETSC_DIR}/share/petsc/examples/ ${INPUT}
+}
+
 function run_dualspace_ex1() {
   pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/dualspace/impls/lagrange/tests
   make ex1
@@ -115,14 +129,120 @@ function run_fe_ex3() {
 }
 
 function run_fe() {
+  # requires: triangle
   run_fe_ex1
   # run_fe_ex2
   # run_fe_ex3
 }
 
+function run_space() {
+  pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/space/impls/ptrimmed/tests
+  make ex1
+  mpiexec -n 1 ./ex1
+  rm ex1
+  popd
+}
+
+function run_tests() {
+  # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  # make ex1
+  # mpiexec -n 1 ./ex1 -degrees 1,2,3,4,5 -points 0,.2,-.5,.8,.9,1 -interval -.5,1
+  # rm ex1
+  # popd
+  # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  # make ex2
+  # mpiexec -n 1 ./ex2 -degrees 1,2,3 -target_points -0.3,0,.2 -src_points -1,-.3,0,.2,1
+  # rm ex2
+  # popd
+  # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  # make ex3
+  # mpiexec -n 1 ./ex3
+  # rm ex3
+  # popd
+  # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  # make ex4
+  # mpiexec -n 1 ./ex4
+  # rm ex4
+  # popd
+  # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  # make ex5
+  # mpiexec -n 1 ./ex5 -petscspace_degree 1 -trace_fe_view
+  # rm ex5
+  # popd
+  # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  # make ex6
+  # mpiexec -n 1 ./ex6
+  # rm ex6
+  # popd
+  # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  # make ex7
+  # mpiexec -n 1 ./ex7 -verbose
+  # mpiexec -n 1 ./ex7 -N 5,6
+  # rm ex7
+  # popd
+  # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  # make ex8
+  # mpiexec -n 1 ./ex8
+  # rm ex8
+  # popd
+  # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  # make ex9
+  # mpiexec -n 1 ./ex9 -dim 1
+  # mpiexec -n 1 ./ex9 -dim 2
+  # mpiexec -n 1 ./ex9 -dim 3
+  # mpiexec -n 1 ./ex9 -dim 4
+  # rm ex9
+  # popd
+  pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
+  make ex10
+  mpiexec -n 1 ./ex10 -velocity_petscspace_degree 1 \
+    -velocity_petscspace_type poly \
+    -velocity_petscspace_components 2 -velocity_petscdualspace_type lagrange \
+    -divu_petscspace_degree 0 \
+    -divu_petscspace_type poly \
+    -divu_petscdualspace_lagrange_continuity false \
+    -velocity_sum_petscfe_default_quadrature_order 1 \
+    -velocity_sum_petscspace_degree 1 \
+    -velocity_sum_petscspace_type sum \
+    -velocity_sum_petscspace_variables 2 \
+    -velocity_sum_petscspace_components 2 \
+    -velocity_sum_petscspace_sum_spaces 2 \
+    -velocity_sum_petscspace_sum_concatenate true \
+    -velocity_sum_petscdualspace_type lagrange \
+    -velocity_sum_sumcomp_0_petscspace_type poly \
+    -velocity_sum_sumcomp_0_petscspace_degree 1 \
+    -velocity_sum_sumcomp_0_petscspace_variables 2 \
+    -velocity_sum_sumcomp_0_petscspace_components 1 \
+    -velocity_sum_sumcomp_1_petscspace_type poly \
+    -velocity_sum_sumcomp_1_petscspace_degree 1 \
+    -velocity_sum_sumcomp_1_petscspace_variables 2 \
+    -velocity_sum_sumcomp_1_petscspace_components 1 \
+    -divu_sum_petscspace_degree 0 \
+    -divu_sum_petscspace_type sum \
+    -divu_sum_petscspace_variables 2 \
+    -divu_sum_petscspace_components 1 \
+    -divu_sum_petscspace_sum_spaces 1 \
+    -divu_sum_petscspace_sum_concatenate true \
+    -divu_sum_petscdualspace_lagrange_continuity false \
+    -divu_sum_sumcomp_0_petscspace_type poly \
+    -divu_sum_sumcomp_0_petscspace_degree 0 \
+    -divu_sum_sumcomp_0_petscspace_variables 2 \
+    -divu_sum_sumcomp_0_petscspace_components 1 \
+    -dm_refine 0 \
+    -snes_error_if_not_converged \
+    -ksp_rtol 1e-10 \
+    -ksp_error_if_not_converged \
+    -pc_type fieldsplit -pc_fieldsplit_type schur -divu_sum_petscdualspace_lagrange_continuity false \
+    -pc_fieldsplit_schur_precondition full
+  rm ex10
+  popd
+}
+
 function run_examples() {
   # run_dualspace
-  run_fe
+  # run_fe
+  # run_space
+  run_tests
   # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/ksp/ksp/tutorials
   # python ex100.py
   # make ex1 && mpiexec -n 1 ./ex1 -m 100000 && rm ex1
@@ -148,5 +268,7 @@ function download_triangle() {
   curl -LO ${GH_URL}
 }
 
+install_openssh
+extract_tutorial
 run_examples
 # download_triangle
