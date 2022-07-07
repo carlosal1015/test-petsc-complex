@@ -2,7 +2,7 @@
 
 function arch_upgrade() {
   sudo pacman --needed --noconfirm -Syyuq >/dev/null 2>&1
-  local TOOLS="clang cmake openssh shellcheck zsh"
+  local TOOLS="clang cmake openssh shellcheck" # zsh
   sudo pacman --needed --noconfirm -S ${TOOLS} >/dev/null 2>&1
   git pull origin main >/dev/null 2>&1
   unset OMPI_MCA_opal_warn_on_missing_libcuda=0
@@ -13,7 +13,7 @@ function arch_upgrade() {
 
 function pull_images() {
   local NAMESPACE="ghcr.io/carlosal1015/aur/petsc-complex-"
-  local flavours=(mumps fftw suitesparse hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py)
+  local flavours=(mumps fftw suitesparse hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py hdf5-openmpi-p4est-deal-ii)
   for flavour in ${flavours[@]}; do
     docker pull ${NAMESPACE}${flavour}:latest >/dev/null 2>&1
   done

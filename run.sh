@@ -1,3 +1,5 @@
+#! /usr/bin/env bash
+
 function install_openssh() {
   sudo pacman --needed --noconfirm -Syyuq >/dev/null 2>&1
   sudo pacman --needed --noconfirm -S openssh >/dev/null 2>&1
@@ -193,6 +195,7 @@ function run_tests() {
   # mpiexec -n 1 ./ex9 -dim 4
   # rm ex9
   # popd
+  # requires: triangle
   pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/dt/tests
   make ex10
   mpiexec -n 1 ./ex10 -velocity_petscspace_degree 1 \
@@ -238,11 +241,62 @@ function run_tests() {
   popd
 }
 
+function run_field() {
+  pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/field/tutorials
+  make ex1
+  mpiexec -n 1 ./ex1 -dm_type da -dim 2 -num_components 2 -num_point_tests 2 -num_fe_tests 2 -num_fv_tests 2 -dmfield_view
+  mpiexec -n 1 ./ex1 -dm_type da -dim 1 -num_fe_tests 2
+  mpiexec -n 1 ./ex1 -dm_type da -dim 2 -num_fe_tests 2
+  mpiexec -n 1 ./ex1 -dm_type da -dim 3 -num_fe_tests 2
+  # required: triangle
+  # mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 2 -dm_plex_box_faces 3,3 -num_components 2 -num_point_tests 2 -num_fe_tests 2 -num_fv_tests 2 -dmfield_view -petscspace_degree 2 -num_quad_points 1
+  # mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 2 -dm_plex_box_faces 3,3  -num_fe_tests 2  -petscspace_degree 0
+  # mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 2 -dm_plex_box_faces 3,3  -num_fe_tests 2  -petscspace_degree 1
+  # mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 2 -dm_plex_box_faces 3,3  -num_fe_tests 2  -petscspace_degree 2
+  mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 2 -dm_plex_box_faces 3,3 -num_fe_tests 2 -petscspace_poly_tensor 1 -petscspace_degree 0 -dm_plex_simplex 0
+  mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 2 -dm_plex_box_faces 3,3 -num_fe_tests 2 -petscspace_poly_tensor 1 -petscspace_degree 1 -dm_plex_simplex 0
+  mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 2 -dm_plex_box_faces 3,3 -num_fe_tests 2 -petscspace_poly_tensor 1 -petscspace_degree 2 -dm_plex_simplex 0
+  mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 3 -dm_plex_box_faces 3,3,3 -num_fe_tests 2 -petscspace_poly_tensor 1 -petscspace_degree 0 -dm_plex_simplex 0
+  mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 3 -dm_plex_box_faces 3,3,3 -num_fe_tests 2 -petscspace_poly_tensor 1 -petscspace_degree 1 -dm_plex_simplex 0
+  mpiexec -n 1 ./ex1 -dm_type plex -dm_plex_dim 3 -dm_plex_box_faces 3,3,3 -num_fe_tests 2 -petscspace_poly_tensor 1 -petscspace_degree 2 -dm_plex_simplex 0
+  # required: triangle
+  # mpiexec -n 1 ./ex1 -dm_coord_space 0 -dm_type plex -dm_plex_dim 2 -dm_plex_box_faces 3,3 -num_components 2 -num_point_tests 2 -num_fe_tests 2 -num_fv_tests 2 -dmfield_view -num_quad_points 1 -test_shell
+  rm ex1
+  popd
+}
+
+function run_composite() {
+  pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/impls/composite/tests
+  make ex1
+  mpiexec -n 1 ./ex1
+  rm ex1
+  popd
+}
+
+# function run_forest() {
+#   pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/impls/forest/p4est/tests
+#   make ex1
+#   mpiexec -n 1 ./ex1
+#   rm ex1
+#   popd
+# }
+
+function run_forest_test() {
+  pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/dm/impls/forest/tests
+  make ex1
+  mpiexec -n 1 ./ex1 -dm_plex_simplex 0 -dm_plex_box_faces 3,3
+  popd
+}
+
 function run_examples() {
   # run_dualspace
   # run_fe
   # run_space
-  run_tests
+  # run_tests
+  # run_field
+  # run_composite
+  # run_forest
+  run_forest_test
   # pushd ${GITPOD_REPO_ROOT}/extracted/examples/src/ksp/ksp/tutorials
   # python ex100.py
   # make ex1 && mpiexec -n 1 ./ex1 -m 100000 && rm ex1

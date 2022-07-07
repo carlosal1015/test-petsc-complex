@@ -24,6 +24,18 @@ In order to use `hdf5-openmpi` file format, the user could face this follow situ
 
 <!-- **Therefore, `hdf5-openmpi` is a `makedepends` and an `optdepends`, but not an `automagicdepends`**. -->
 
+## [`p4est-deal-ii`](https://aur.archlinux.org/packages/p4est-deal-ii)
+
+In order to use `p4est-deal-ii` for manage forest of octrees, the user could face this follow situations:
+
+| `p4est-deal-ii` was installed ... compilation | feature `p4est-deal-ii` for `petsc-complex` status | `petsc-complex` status |
+| :-------------------------------------------- | :------------------------------------------------: | :--------------------: |
+| before (`automagicdepends`)                   |                                                    |           ✅           |
+| between (`makedepends`)                       |                                                    |           ✅           |
+| after (`optdepends`)                          |                                                    |           ✅           |
+
+<!-- **Therefore, `p4est-deal-ii` is a `makedepends` and an `optdepends`, but not an `automagicdepends`**. -->
+
 > Side note:
 >
 > - `optdepends` means that `petsc-complex` is working fine, but if user requires a `foo-package` feature only must install it after installation (e.g. `python` bindings).
