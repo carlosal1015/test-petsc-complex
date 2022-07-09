@@ -55,3 +55,4 @@ extracted
 *.tar.gz
 *.pkg.tar.zst
 archimedes-tools
+*.txt

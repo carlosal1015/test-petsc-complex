@@ -28,13 +28,16 @@ function test_hdf5-openmpi-p4est-deal-ii() {
 # test_hdf5-openmpi-p4est-deal-ii
 
 function namcap_ldd_objdump() {
-  local flavours=(mumps fftw suitesparse hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py hdf5-openmpi-p4est-deal-ii)
+  local flavours=(hdf5-openmpi)
+  # local flavours=(mumps fftw suitesparse hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py hdf5-openmpi-p4est-deal-ii)
   for flavour in ${flavours[@]}; do
     docker run -t -d --rm --name ${flavour} ghcr.io/carlosal1015/aur/petsc-complex-${flavour}
     docker cp ${GITPOD_REPO_ROOT}/list.sh ${flavour}:/home/gitpod
     docker exec -it ${flavour} bash /home/gitpod/list.sh
-    docker cp ${flavour}:/home/gitpod/log.txt .
+    docker cp ${flavour}:/tmp/log.txt .
     docker stop ${flavour}
     mv log.txt log-${flavour}.txt
   done
 }
+
+namcap_ldd_objdump
