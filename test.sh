@@ -23,9 +23,17 @@ function test_hdf5-openmpi-p4est-deal-ii() {
   docker stop hdf5-openmpi-p4est-deal-ii
 }
 
+function test_trilinos() {
+  docker run -t -d --rm -e GITPOD_REPO_ROOT=/home/gitpod --name trilinos ghcr.io/carlosal1015/aur/petsc-complex-trilinos
+  docker cp ${GITPOD_REPO_ROOT}/run.sh trilinos:/home/gitpod
+  docker exec -it trilinos bash /home/gitpod/run.sh
+  docker stop trilinos
+}
+
 # test_triangle
 # test_hdf5-openmpi
 # test_hdf5-openmpi-p4est-deal-ii
+test_trilinos
 
 function namcap_ldd_objdump() {
   local flavours=(hdf5-openmpi)
@@ -40,4 +48,4 @@ function namcap_ldd_objdump() {
   done
 }
 
-namcap_ldd_objdump
+# namcap_ldd_objdump

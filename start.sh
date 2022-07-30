@@ -13,7 +13,7 @@ function arch_upgrade() {
 
 function pull_images() {
   local NAMESPACE="ghcr.io/carlosal1015/aur/petsc-complex-"
-  local flavours=(mumps fftw suitesparse hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py hdf5-openmpi-p4est-deal-ii)
+  local flavours=(mumps fftw suitesparse hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py hdf5-openmpi-p4est-deal-ii trilinos) # sundials valgrind opencl
   for flavour in ${flavours[@]}; do
     docker pull ${NAMESPACE}${flavour}:latest >/dev/null 2>&1
   done
