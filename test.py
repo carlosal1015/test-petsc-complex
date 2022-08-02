@@ -1,3 +1,5 @@
+#!/usr/bin/env -S mpirun -n 2 python test.py
+
 # https://gitlab.com/petsc/petsc/-/issues/1149
 
 from petsc4py import PETSc
