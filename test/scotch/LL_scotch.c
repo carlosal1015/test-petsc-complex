@@ -1,4 +1,4 @@
-/* Copyright 2014,2015,2018 IPB, Universite de Bordeaux, INRIA & CNRS
+/* Copyright 2021 IPB, Universite de Bordeaux, INRIA & CNRS
 **
 ** This file is part of the Scotch software package for static mapping,
 ** graph partitioning and sparse matrix ordering.
@@ -31,15 +31,16 @@
 */
 /************************************************************/
 /**                                                        **/
-/**   NAME       : test_scotch_arch.c                      **/
+/**   NAME       : test_libmetis_dual.c                    **/
 /**                                                        **/
-/**   AUTHOR     : Francois PELLEGRINI                     **/
+/**   AUTHOR     : Marc FUENTES                            **/
+/**                Francois PELLEGRINI                     **/
 /**                                                        **/
-/**   FUNCTION   : This module tests the operation of      **/
-/**                the SCOTCH_arch*() routines.            **/
+/**   FUNCTION   : This module tests the operations of     **/
+/**                libscotchmetis dual graph routines.     **/
 /**                                                        **/
-/**   DATES      : # Version 6.0  : from : 25 jun 2014     **/
-/**                                 to   : 22 may 2018     **/
+/**   DATES      : # Version 6.1  : from : 10 feb 2021     **/
+/**                                 to   : 17 jul 2021     **/
 /**                                                        **/
 /************************************************************/
 
@@ -47,6 +48,7 @@
 **  The defines and includes.
 */
 
+#include <math.h>
 #include <stdio.h>
 #if (((defined __STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)) || (defined HAVE_STDINT_H))
 #include <stdint.h>
@@ -55,8 +57,7 @@
 #include <string.h>
 
 #include <scotch.h>
-
-#define ARCHNBR 20
+#include <metis.h> /* Our "metis.h" file */
 
 /*********************/
 /*                   */
@@ -68,132 +69,99 @@ int main(
     int argc,
     char *argv[])
 {
-  FILE *fileptr;
-  SCOTCH_Arch archtab[ARCHNBR];
-  SCOTCH_Num vnumnbr = 5;
-  SCOTCH_Num vnumtab[8] = {0, 4, 1, 5, 7, 11, 13, 15};
-  SCOTCH_Num dimnnbr = 5;
-  SCOTCH_Num dimntab[5] = {3, 3, 5, 4, 8};
-  SCOTCH_Num levlnbr = 3;
-  SCOTCH_Num sizetab[3] = {6, 3, 4};
-  SCOTCH_Num linktab[3] = {20, 5, 1};
-  int archnbr = 0;
-  int i;
+  SCOTCH_Num vertnum;
+  SCOTCH_Num edgenum;
+  SCOTCH_Num *xadj;
+  SCOTCH_Num *adjncy;
+  SCOTCH_Num ncommon = 1;
+  SCOTCH_Num baseval = 0;
+  SCOTCH_Num xadnbr;
+  SCOTCH_Num adjnbr;
+  SCOTCH_Num *epart;
+  SCOTCH_Num *npart;
+  SCOTCH_Num nparts;
+  SCOTCH_Num objval;
+  SCOTCH_Num options[METIS_NOPTIONS];
+  SCOTCH_Num ne = 6;
+  SCOTCH_Num nn = 7;
+  double tpwgt[3] = {0.75, 0.125, 0.125};
+  SCOTCH_Num vgwt[6] = {1, 2, 1, 1, 1, 1};
+  SCOTCH_Num eptr[] = {0, 3, 6, 9, 12, 15, 18};
+  SCOTCH_Num eind[] = {0, 1, 2, 0, 1, 5, 1, 5, 4, 1, 4, 6, 1, 6, 3, 1, 3, 2};
+  SCOTCH_Num xadj_c[] = {0, 5, 10, 15, 20, 25, 30};
+  SCOTCH_Num adjncy_c[] = {1, 2, 3, 4, 5, 0, 2, 3, 4, 5, 0, 1, 3, 4, 5, 0, 1, 2, 4, 5, 0, 1, 2, 3, 5, 0, 1, 2, 3, 4};
 
   SCOTCH_errorProg(argv[0]);
 
-  SCOTCH_randomReset();
+  xadnbr = sizeof(xadj_c) / sizeof(SCOTCH_Num);
+  adjnbr = sizeof(adjncy_c) / sizeof(SCOTCH_Num);
 
-  if (SCOTCH_archHcub(&archtab[archnbr++], 4) != 0)
-  { /* TRICK: must be in rank 0 to create sub-architecture from it */
-    SCOTCH_errorPrint("main: cannot create hcub architecture");
-    exit(EXIT_FAILURE);
-  }
-
-  if (SCOTCH_archCmplt(&archtab[archnbr++], 8) != 0)
+  if (argc >= 2)
   {
-    SCOTCH_errorPrint("main: cannot create cmplt architecture");
-    exit(EXIT_FAILURE);
+    SCOTCH_Num edgenbr;
+    SCOTCH_Num velmnum;
+
+    baseval = atoi(argv[1]);
+    edgenbr = eptr[ne]; /* Preserve un-based number of edges */
+
+    for (velmnum = 0; velmnum <= ne; velmnum++)
+      eptr[velmnum] += baseval;
+    for (edgenum = 0; edgenum < edgenbr; edgenum++)
+      eind[edgenum] += baseval;
+    for (vertnum = 0; vertnum < xadnbr; vertnum++)
+      xadj_c[vertnum] += baseval;
+    for (edgenum = 0; edgenum < adjnbr; edgenum++)
+      adjncy_c[edgenum] += baseval;
   }
 
-  if (SCOTCH_archMesh2(&archtab[archnbr++], 2, 4) != 0)
+  METIS_MeshToDual(&ne, &nn, eptr, eind, &ncommon, &baseval, &xadj, &adjncy);
+  if (xadj == NULL)
   {
-    SCOTCH_errorPrint("main: cannot create mesh2D architecture");
+    SCOTCH_errorPrint("main: error in METIS_MeshToDual");
     exit(EXIT_FAILURE);
   }
 
-  if (SCOTCH_archMesh3(&archtab[archnbr++], 3, 4, 5) != 0)
+  for (vertnum = 0; vertnum < xadnbr; vertnum++)
   {
-    SCOTCH_errorPrint("main: cannot create mesh3D architecture");
-    exit(EXIT_FAILURE);
-  }
-
-  if (SCOTCH_archMeshX(&archtab[archnbr++], dimnnbr, dimntab) != 0)
-  {
-    SCOTCH_errorPrint("main: cannot create meshXD architecture");
-    exit(EXIT_FAILURE);
-  }
-
-  if (SCOTCH_archTleaf(&archtab[archnbr++], levlnbr, sizetab, linktab) != 0)
-  {
-    SCOTCH_errorPrint("main: cannot create tleaf architecture");
-    exit(EXIT_FAILURE);
-  }
-
-  if (SCOTCH_archTorus2(&archtab[archnbr++], 2, 4) != 0)
-  {
-    SCOTCH_errorPrint("main: cannot create torus2D architecture");
-    exit(EXIT_FAILURE);
-  }
-
-  if (SCOTCH_archTorus3(&archtab[archnbr++], 3, 4, 5) != 0)
-  {
-    SCOTCH_errorPrint("main: cannot create torus3D architecture");
-    exit(EXIT_FAILURE);
-  }
-
-  if (SCOTCH_archTorusX(&archtab[archnbr++], dimnnbr, dimntab) != 0)
-  {
-    SCOTCH_errorPrint("main: cannot create torusXD architecture");
-    exit(EXIT_FAILURE);
-  }
-
-  if (SCOTCH_archSub(&archtab[archnbr++], &archtab[0], vnumnbr + 3, vnumtab) != 0)
-  { /* TRICK: create sub-architecture of hypercube at rank 0 */
-    SCOTCH_errorPrint("main: cannot create sub-architecture (1)");
-    exit(EXIT_FAILURE);
-  }
-
-  for (i = 0; i < archnbr; i++)
-  {
-    if (SCOTCH_archSub(&archtab[i + archnbr], &archtab[i], vnumnbr, vnumtab) != 0)
-    { /* Create sub-architectures (of sub-architecture, too) */
-      SCOTCH_errorPrint("main: cannot create sub-architecture (%d)", 2 + i);
-      exit(EXIT_FAILURE);
-    }
-  }
-  archnbr *= 2; /* Number of architectures has doubled */
-
-  if ((fileptr = fopen(argv[1], "w+")) == NULL)
-  { /* Write all architectures to file */
-    SCOTCH_errorPrint("main: cannot open file (1)");
-    exit(EXIT_FAILURE);
-  }
-
-  for (i = 0; i < archnbr; i++)
-  { /* Save all architectures to same file */
-    if (SCOTCH_archSave(&archtab[i], fileptr) != 0)
+    if (xadj[vertnum] != xadj_c[vertnum])
     {
-      SCOTCH_errorPrint("main: cannot save architecture (%d)", 1 + i);
+      SCOTCH_errorPrint("main: invalid vertex array");
+      exit(EXIT_FAILURE);
+    }
+  }
+  for (edgenum = 0; edgenum < adjnbr; edgenum++)
+  {
+    if (adjncy[edgenum] != adjncy_c[edgenum])
+    {
+      SCOTCH_errorPrint("main: invalid edge array");
       exit(EXIT_FAILURE);
     }
   }
 
-  fclose(fileptr);
+  free(xadj); /* Free memory arrays allocated by METIS_MeshToDual() */
+  free(adjncy);
 
-  for (i = archnbr - 1; i >= 0; i--) /* Destroy architectures in reverse order to destroy sub-architectures first */
-    SCOTCH_archExit(&archtab[i]);
-
-  if ((fileptr = fopen(argv[1], "r")) == NULL)
-  { /* Read all architectures from file where they were written to */
-    SCOTCH_errorPrint("main: cannot open file (2)");
+  if (((epart = (SCOTCH_Num *)malloc(ne * sizeof(SCOTCH_Num))) == NULL) ||
+      ((npart = (SCOTCH_Num *)malloc(nn * sizeof(SCOTCH_Num))) == NULL))
+  {
+    SCOTCH_errorPrint("main: out of memory");
     exit(EXIT_FAILURE);
   }
 
-  for (i = 0; i < archnbr; i++)
+  nparts = 3;
+  ncommon++;
+  METIS_SetDefaultOptions(options);
+  options[METIS_OPTION_NUMBERING] = baseval;
+
+  METIS_PartMeshDual(&ne, &nn, eptr, eind, vgwt, NULL, &ncommon, &nparts, tpwgt, options, &objval, epart, npart);
+  if (objval < 0)
   {
-    if ((SCOTCH_archInit(&archtab[i]) != 0) ||
-        (SCOTCH_archLoad(&archtab[i], fileptr) != 0))
-    {
-      SCOTCH_errorPrint("main: cannot load architecture (%d)", 1 + i);
-      exit(EXIT_FAILURE);
-    }
+    SCOTCH_errorPrint("main: error in METIS_PartMeshDual");
+    exit(EXIT_FAILURE);
   }
 
-  fclose(fileptr);
-
-  for (i = 0; i < archnbr; i++) /* Destroy architectures in any order, as they are now all autonomous from each other */
-    SCOTCH_archExit(&archtab[i]);
+  free(npart);
+  free(epart);
 
   exit(EXIT_SUCCESS);
 }
