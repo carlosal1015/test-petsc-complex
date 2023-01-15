@@ -1,3 +1,4 @@
+find_package(ParMETIS REQUIRED)
 #find_package(MPI REQUIRED)
 
 add_executable(LL_parmetis LL_parmetis.cc)

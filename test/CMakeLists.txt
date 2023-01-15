@@ -8,3 +8,4 @@ include(FindParMETIS)
 
 add_subdirectory("metis")
 add_subdirectory("parmetis")
+add_subdirectory("mumps")
