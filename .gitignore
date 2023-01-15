@@ -56,3 +56,4 @@ extracted
 *.pkg.tar.zst
 archimedes-tools
 *.txt
+build
