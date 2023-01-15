@@ -1,3 +1,4 @@
+option(USE_MPI "Use MPI" OFF)
 find_package(METIS REQUIRED)
 find_package(PTScotch REQUIRED)
 
