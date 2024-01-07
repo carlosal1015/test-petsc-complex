@@ -5,7 +5,7 @@ ARG PACKAGES="\
   git \
   "
 
-RUN sudo pacman --needed --noconfirm --noprogressbar -Syyuq && \
+RUN sudo pacman --needed --noconfirm --noprogressbar -Syuq && \
   sudo pacman --needed --noconfirm --noprogressbar -S ${PACKAGES} && \
   sudo systemctl enable docker && \
   sudo pacman -Scc <<< Y <<< Y && \

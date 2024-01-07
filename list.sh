@@ -10,12 +10,12 @@ function install_namcap() {
 function namcaping() {
   export PETSC_DIR=/opt/petsc/linux-c-opt
   export PYTHONPATH=/opt/petsc/linux-c-opt/lib:${PYTHONPATH}
-  namcap /tmp/petsc-complex-3.17.3-1-x86_64.pkg.tar.zst >>/tmp/log.txt
+  namcap /tmp/petsc-complex-3.20.3-1-x86_64.pkg.tar.zst >>/tmp/log.txt
 }
 
 function ldding() {
   ldd -v /opt/petsc/linux-c-opt/lib/libpetsc.so >>/tmp/log.txt
-  ldd -v /opt/petsc/linux-c-opt/lib/petsc4py/lib/PETSc.cpython-310-x86_64-linux-gnu.so >>/tmp/log.txt
+  ldd -v /opt/petsc/linux-c-opt/lib/petsc4py/lib/PETSc.cpython-311-x86_64-linux-gnu.so >>/tmp/log.txt
 }
 
 function objdumping() {

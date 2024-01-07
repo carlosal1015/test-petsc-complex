@@ -1,8 +1,7 @@
 #! /usr/bin/env bash
 
 function install_openssh() {
-  sudo pacman --needed --noconfirm -Syyuq >/dev/null 2>&1
-  sudo pacman --needed --noconfirm -S openssh >/dev/null 2>&1
+  sudo pacman --needed --noconfirm -Syuq >/dev/null 2>&1
 }
 
 function extract_tutorial() {

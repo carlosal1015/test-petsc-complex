@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
 
 function arch_upgrade() {
-  sudo pacman --needed --noconfirm -Syyuq >/dev/null 2>&1
-  local TOOLS="clang cmake openssh shellcheck" # zsh
+  sudo pacman --needed --noconfirm -Syuq >/dev/null 2>&1
+  local TOOLS="clang cmake shellcheck" # zsh
   sudo pacman --needed --noconfirm -S ${TOOLS} >/dev/null 2>&1
   git pull origin main >/dev/null 2>&1
   unset OMPI_MCA_opal_warn_on_missing_libcuda=0
