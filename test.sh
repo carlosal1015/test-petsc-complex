@@ -37,7 +37,7 @@ test_trilinos
 
 function namcap_ldd_objdump() {
   local flavours=(hdf5-openmpi)
-  # local flavours=(mumps fftw suitesparse hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py hdf5-openmpi-p4est-deal-ii)
+  # local flavours=(libyaml mumps fftw suitesparse superlu superlu_dist hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py hdf5-openmpi-p4est-deal-ii opencl)
   for flavour in ${flavours[@]}; do
     docker run -t -d --rm --name ${flavour} ghcr.io/carlosal1015/aur/petsc-complex-${flavour}
     docker cp ${GITPOD_REPO_ROOT}/list.sh ${flavour}:/home/gitpod
