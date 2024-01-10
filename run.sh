@@ -1,9 +1,5 @@
 #! /usr/bin/env bash
 
-function install_openssh() {
-  sudo pacman --needed --noconfirm -Syuq >/dev/null 2>&1
-}
-
 function extract_tutorial() {
   export OMPI_MCA_opal_warn_on_missing_libcuda=0
   export PETSC_DIR=/opt/petsc/linux-c-opt
@@ -321,7 +317,6 @@ function download_triangle() {
   curl -LO ${GH_URL}
 }
 
-install_openssh
 extract_tutorial
 run_examples
 # download_triangle

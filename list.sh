@@ -3,7 +3,7 @@
 function install_namcap() {
   # unset PETSC_DIR=/opt/petsc/linux-c-opt
   # unset PYTHONPATH=/opt/petsc/linux-c-opt/lib:${PYTHONPATH}
-  sudo pacman --needed --noconfirm -Syyuq >/dev/null 2>&1
+  sudo pacman --needed --noconfirm -Syuq >/dev/null 2>&1
   sudo pacman --needed --noconfirm -S namcap >/dev/null 2>&1
 }
 
