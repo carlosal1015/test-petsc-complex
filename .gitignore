@@ -57,3 +57,4 @@ extracted
 archimedes-tools
 !CmakeLists.txt
 build
+log*.txt
