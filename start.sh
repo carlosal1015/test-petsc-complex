@@ -12,10 +12,17 @@ function arch_upgrade() {
 }
 
 function pull_images() {
-  local NAMESPACE="ghcr.io/carlosal1015/aur/petsc-complex-"
-  local flavours=(libyaml mumps fftw suitesparse superlu superlu_dist hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py hdf5-openmpi-p4est-deal-ii sundials trilinos valgrind opencl)
-  for flavour in ${flavours[@]}; do
-    docker pull ${NAMESPACE}${flavour}:latest >/dev/null 2>&1
+  local REAL_NAMESPACE="ghcr.io/carlosal1015/aur/petsc-"
+  local COMPLEX_NAMESPACE="ghcr.io/carlosal1015/aur/petsc-complex-"
+  local real_flavours=(mumps pastix superlu_dist)
+  local complex_flavours=(libyaml mumps fftw suitesparse superlu superlu_dist hdf5-openmpi hypre p4est-deal-ii pastix triangle python-mpi4py hdf5-openmpi-p4est-deal-ii sundials trilinos valgrind opencl)
+
+  for complex_flavour in ${complex_flavours[@]}; do
+    docker pull ${COMPLEX_NAMESPACE}${complex_flavour}:latest >/dev/null 2>&1
+  done
+
+  for real_flavour in ${real_flavours[@]}; do
+    docker pull ${REAL_NAMESPACE}${real_flavour}:latest >/dev/null 2>&1
   done
   printf "[1/2] Pull finished.\n"
 }

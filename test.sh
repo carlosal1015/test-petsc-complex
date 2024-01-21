@@ -33,7 +33,7 @@ function test_trilinos() {
 # test_triangle
 # test_hdf5-openmpi
 # test_hdf5-openmpi-p4est-deal-ii
-test_trilinos
+# test_trilinos
 
 function namcap_ldd_objdump() {
   local flavours=(hdf5-openmpi)
@@ -44,8 +44,8 @@ function namcap_ldd_objdump() {
     docker exec -it ${flavour} bash /home/gitpod/list.sh
     docker cp ${flavour}:/tmp/log.txt .
     docker stop ${flavour}
-    mv log.txt log-${flavour}.txt
+    mv log.txt log-petsc-complex-${flavour}.txt
   done
 }
 
-# namcap_ldd_objdump
+namcap_ldd_objdump
