@@ -21,6 +21,6 @@ jobs:
           run: |
             curl -s https://gitlab.com/dune-archiso/dune-archiso.gitlab.io/-/raw/main/templates/add_archlinuxcn.sh | bash
             sudo pacman -Syuq --needed --noconfirm
-            yay -Ss inetutils
-            sudo pacman -S fftw hypre metis mumps parmetis suitesparse hdf5-openmpi scotch superlu_dist --noconfirm
+            # FIXME: Unable to find mumps in default locations!
+            sudo pacman -S fftw hypre metis parmetis suitesparse hdf5-openmpi scotch superlu_dist inetutils --noconfirm
             yay --noconfirm -S aur/petsc
