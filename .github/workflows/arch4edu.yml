@@ -25,4 +25,8 @@ jobs:
             sudo pacman -S superlu_dist --noconfirm
             yay -G aur/petsc
             cd petsc
+            git config --global user.email github-actions@github.com
+            git config --global user.name github-actions
+            #curl -O ${PATCH}
+            #git am --signoff < 0001-Add-support-for-OpenCL.patch
             makepkg --noconfirm -s

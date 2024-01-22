@@ -29,5 +29,5 @@ jobs:
             yay -G aur/petsc
             cd petsc
             makepkg --noconfirm -s
-            ls -lR /tmp/makepkg/
-            # cat configure.log
+            ls -l /tmp/makepkg/petsc/src/petsc-3.20.3/arch-linux-c-opt/lib/petsc/conf/configure.log
+            cat /tmp/makepkg/petsc/src/petsc-3.20.3/arch-linux-c-opt/lib/petsc/conf/configure.log
