@@ -34,4 +34,4 @@ jobs:
             curl -s https://gitlab.com/dune-archiso/dune-archiso.gitlab.io/-/raw/main/templates/add_arch4edu.sh | bash
             sudo pacman -Syuq --needed --noconfirm
             sudo pacman -S fftw hypre metis mumps parmetis suitesparse hdf5-openmpi triangle pastix scotch superlu_dist valgrind --noconfirm
-            yay -S aur/petsc
+            yay --noconfirm -S aur/petsc
