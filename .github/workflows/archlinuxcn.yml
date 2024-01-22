@@ -29,3 +29,5 @@ jobs:
             yay -G aur/petsc
             cd petsc
             makepkg --noconfirm -s
+            ls -lR /tmp/makepkg/
+            # cat configure.log
