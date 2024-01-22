@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build_latex:
+  build:
     runs-on: ubuntu-22.04
 
     steps:
@@ -34,4 +34,4 @@ jobs:
             curl -s https://gitlab.com/dune-archiso/dune-archiso.gitlab.io/-/raw/main/templates/add_arch4edu.sh | bash
             sudo pacman -Syuq --needed --noconfirm
             sudo pacman -S fftw hypre metis mumps parmetis suitesparse hdf5-openmpi triangle pastix scotch superlu_dist valgrind --noconfirm
-            yay -S aur/mumps
+            yay -S aur/petsc
