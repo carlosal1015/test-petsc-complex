@@ -1,0 +1,54 @@
+From 6de650fa3bf2c6cd9b212d88dbd1587512e66e5c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Carlos=20Aznar=C3=A1n?= <caznaranl@uni.pe>
+Date: Mon, 22 Jan 2024 17:48:18 -0500
+Subject: [PATCH] Enable debugging
+
+---
+ .SRCINFO | 2 +-
+ PKGBUILD | 7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/.SRCINFO b/.SRCINFO
+index b8567ab..58c396f 100644
+--- a/.SRCINFO
++++ b/.SRCINFO
+@@ -1,7 +1,7 @@
+ pkgbase = petsc
+ 	pkgdesc = Portable, extensible toolkit for scientific computation
+ 	pkgver = 3.20.3
+-	pkgrel = 3
++	pkgrel = 4
+ 	url = https://petsc.org
+ 	install = petsc.install
+ 	arch = i686
+diff --git a/PKGBUILD b/PKGBUILD
+index 1ff0b9b..7916ff8 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -3,12 +3,12 @@
+ # Contributor: Myles English <myles at rockhead dot biz>
+ # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
+ pkgver=3.20.3
+-pkgrel=3
++pkgrel=4
+ pkgname=petsc
+-_config=linux-c-opt
++# _config=linux-c-opt
+ # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
+ #"linux-c-debug" for some things, so the _config should be changed too
+-#_config=linux-c-debug
++_config=linux-c-debug
+ pkgdesc="Portable, extensible toolkit for scientific computation"
+ arch=('i686' 'x86_64')
+ url="https://petsc.org"
+@@ -48,6 +48,7 @@ build() {
+   export PETSC_DIR=${_build_dir}
+ 
+   CONFOPTS="--with-shared-libraries=1 \
++            --with-debugging=1 \
+             --with-petsc4py=1 \
+             --with-mpi-f90module-visibility=0 \
+             --with-mpi-dir=/usr \
+-- 
+2.43.0
+
