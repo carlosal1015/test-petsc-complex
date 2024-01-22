@@ -25,4 +25,4 @@ jobs:
             sudo pacman -S fftw hypre metis parmetis suitesparse hdf5-openmpi scotch superlu_dist valgrind inetutils --noconfirm
             yay -G aur/petsc
             cd petsc
-            makepkg --noconfirm -S
+            makepkg --noconfirm -s
