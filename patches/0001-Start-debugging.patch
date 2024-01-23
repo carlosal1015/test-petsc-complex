@@ -1,0 +1,38 @@
+From 6255748bf5b2a70402868578a4357dab29e395e8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Carlos=20Aznar=C3=A1n?= <caznaranl@uni.pe>
+Date: Tue, 23 Jan 2024 09:50:01 -0500
+Subject: [PATCH] Start debugging
+
+---
+ PKGBUILD | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/PKGBUILD b/PKGBUILD
+index 1ff0b9b..0610234 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -32,13 +32,19 @@ optdepends=('trilinos: support for trilinos'
+ 
+ install=petsc.install
+ source=(http://web.cels.anl.gov/projects/petsc/download/release-snapshots/${pkgname}-${pkgver}.tar.gz
+-        test_optdepends.sh)
++        test_optdepends.sh
++        https://raw.githubusercontent.com/carlosal1015/test-petsc-complex/main/patches/runex19_superlu_dist.patch)
+ sha512sums=('912538850eeaf6d78c090438f8198963cd787ef7ff3bbc841719b08fc738c7b20b7955850baacca4eada4a97b113492b9111d35afa33918ec52123e2f1a73f9b'
+-            '80dfd422ba16e0fe529b65fd195d825095483282a2b202f03f81c507cfe694ce0ec9db606cbd74ac68d206343818a6aec15d32aea8faceddd1cec756409d5932')
++            '80dfd422ba16e0fe529b65fd195d825095483282a2b202f03f81c507cfe694ce0ec9db606cbd74ac68d206343818a6aec15d32aea8faceddd1cec756409d5932'
++            'SKIP')
+ 
+ _install_dir=/opt/petsc/${_config}
+ _petsc_arch=arch-${_config}
+ 
++prepare() {
++  cd ${srcdir}/${pkgname}-${pkgver}
++  patch -p1 -i ../runex19_superlu_dist.patch
++}
+ 
+ build() {
+   _build_dir=${srcdir}/${pkgname}-${pkgver}
+-- 
+2.43.0
+

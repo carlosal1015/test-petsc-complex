@@ -27,6 +27,6 @@ jobs:
             cd petsc
             git config --global user.email github-actions@github.com
             git config --global user.name github-actions
-            curl -O https://raw.githubusercontent.com/carlosal1015/test-petsc-complex/main/patches/0001-Enable-debugging.patch
+            curl -O https://raw.githubusercontent.com/carlosal1015/test-petsc-complex/main/patches/0001-Start-debugging.patch
             git am --signoff < 0001-Enable-debugging.patch
             makepkg --noconfirm -s
