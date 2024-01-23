@@ -3,6 +3,8 @@ name: Test PETSc on GitHub with arch4edu repository
 on:
   push:
     branches: [main]
+    paths:
+      - patches/*
 
 jobs:
   build:

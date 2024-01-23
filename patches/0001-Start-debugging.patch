@@ -1,16 +1,32 @@
-From 6255748bf5b2a70402868578a4357dab29e395e8 Mon Sep 17 00:00:00 2001
+From 60b622effb47ede71a5a37461c9bd9af5b50c7b7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Carlos=20Aznar=C3=A1n?= <caznaranl@uni.pe>
-Date: Tue, 23 Jan 2024 09:50:01 -0500
+Date: Tue, 23 Jan 2024 10:27:08 -0500
 Subject: [PATCH] Start debugging
 
 ---
- PKGBUILD | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ PKGBUILD | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
 diff --git a/PKGBUILD b/PKGBUILD
-index 1ff0b9b..0610234 100644
+index 1ff0b9b..e793f25 100644
 --- a/PKGBUILD
 +++ b/PKGBUILD
+@@ -3,12 +3,12 @@
+ # Contributor: Myles English <myles at rockhead dot biz>
+ # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
+ pkgver=3.20.3
+-pkgrel=3
++pkgrel=4
+ pkgname=petsc
+-_config=linux-c-opt
++# _config=linux-c-opt
+ # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
+ #"linux-c-debug" for some things, so the _config should be changed too
+-#_config=linux-c-debug
++_config=linux-c-debug
+ pkgdesc="Portable, extensible toolkit for scientific computation"
+ arch=('i686' 'x86_64')
+ url="https://petsc.org"
 @@ -32,13 +32,19 @@ optdepends=('trilinos: support for trilinos'
  
  install=petsc.install
@@ -33,6 +49,14 @@ index 1ff0b9b..0610234 100644
  
  build() {
    _build_dir=${srcdir}/${pkgname}-${pkgver}
+@@ -48,6 +54,7 @@ build() {
+   export PETSC_DIR=${_build_dir}
+ 
+   CONFOPTS="--with-shared-libraries=1 \
++            --with-debugging=1 \
+             --with-petsc4py=1 \
+             --with-mpi-f90module-visibility=0 \
+             --with-mpi-dir=/usr \
 -- 
 2.43.0
 
