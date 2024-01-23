@@ -1,13 +1,11 @@
 diff --color -ruN petsc-3.20.3/src/snes/tutorials/makefile petsc-3.20.3-patched/src/snes/tutorials/makefile
 --- petsc-3.20.3/src/snes/tutorials/makefile	2023-11-30 14:14:32.000000000 -0500
-+++ petsc-3.20.3-patched/src/snes/tutorials/makefile	2024-01-23 13:21:48.136420822 -0500
-@@ -111,7 +111,8 @@
- 	   ${RM} -f ex19.tmp
- runex19_suitesparse:
++++ petsc-3.20.3-patched/src/snes/tutorials/makefile	2024-01-23 13:39:56.244867583 -0500
+@@ -113,6 +113,7 @@
  	-@${MPIEXEC} -n 1 ${MPIEXEC_TAIL} ./ex19 -da_refine 3 -snes_monitor_short -pc_type lu -pc_factor_mat_solver_type umfpack > ex19_1.tmp 2>&1; \
--	   if (${DIFF} output/ex19_suitesparse.out ex19_1.tmp) then \
-+	   echo ${MPIEXEC} ${MPIEXEC_TAIL} \
-+     if (${DIFF} output/ex19_suitesparse.out ex19_1.tmp) then \
+ 	   if (${DIFF} output/ex19_suitesparse.out ex19_1.tmp) then \
             echo "C/C++ example src/snes/tutorials/ex19 run successfully with suitesparse"; \
++           echo "${MPIEXEC_TAIL} ${MPIEXEC}"; \
             else \
               printf "${PWD}\nPossible problem with ex19 running with suitesparse, diffs above\n=========================================\n"; \
+              touch ../../../check_error;\
