@@ -1,17 +1,17 @@
-From f051f9bc0795f3d6d668a3fe1b9fa3fa8a26396d Mon Sep 17 00:00:00 2001
+From a08cefc674bdb97a2fabe2255ae9cf449288c3df Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Carlos=20Aznar=C3=A1n?= <caznaranl@uni.pe>
-Date: Tue, 23 Jan 2024 12:47:31 -0500
+Date: Tue, 23 Jan 2024 13:48:25 -0500
 Subject: [PATCH] Start debugging
 
 ---
- PKGBUILD | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ PKGBUILD | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/PKGBUILD b/PKGBUILD
-index 635b928..f19c61a 100644
+index 635b928..5a6fddd 100644
 --- a/PKGBUILD
 +++ b/PKGBUILD
-@@ -3,12 +3,12 @@
+@@ -3,18 +3,18 @@
  # Contributor: Myles English <myles at rockhead dot biz>
  # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
  pkgver=3.20.3
@@ -27,6 +27,13 @@ index 635b928..f19c61a 100644
  pkgdesc="Portable, extensible toolkit for scientific computation"
  arch=('i686' 'x86_64')
  url="https://petsc.org"
+ license=('BSD')
+ options=(staticlibs)
+-depends=('python-numpy' 'openmpi' 'boost' 'lapack' 'hdf5-openmpi' 'fftw' 'superlu' 'suitesparse')
++depends=('python-numpy' 'openmpi' 'boost' 'lapack' 'hdf5-openmpi' 'fftw' 'superlu' 'suitesparse' 'valgrind')
+ makedepends=('gcc' 'gcc-fortran' 'cmake' 'cython')
+ provides=('petsc4py')
+ optdepends=('trilinos: support for trilinos'
 @@ -31,13 +31,19 @@ optdepends=('trilinos: support for trilinos'
  
  install=petsc.install
@@ -49,7 +56,7 @@ index 635b928..f19c61a 100644
  
  build() {
    _build_dir=${srcdir}/${pkgname}-${pkgver}
-@@ -47,6 +53,7 @@ build() {
+@@ -47,6 +53,8 @@ build() {
    export PETSC_DIR=${_build_dir}
  
    CONFOPTS="--with-shared-libraries=1 \
