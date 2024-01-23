@@ -23,3 +23,8 @@ jobs:
           run: |
             sudo pacman -Syuq --needed --noconfirm
             sudo pacman -S git --noconfirm
+            pwd
+            cd
+            git clone https://aur.archlinux.org/petsc.git
+            cd petsc
+            makepkg --noconfirm -s
