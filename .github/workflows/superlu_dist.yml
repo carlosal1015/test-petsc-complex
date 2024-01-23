@@ -1,4 +1,4 @@
-name: Test PETSc on GitHub with mumps
+name: Test PETSc on GitHub with superlu_dist
 
 on:
   push:
@@ -16,13 +16,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ghcr.io
-          image: ghcr.io/carlosal1015/aur/mumps:latest
+          image: ghcr.io/carlosal1015/aur/superlu_dist:latest
           options: |
             -v ${{github.workspace}}:/work
           shell: bash
           run: |
             sudo pacman -Syuq --needed --noconfirm >/dev/null 2>&1
-            pacman -Qi mumps
+            pacman -Qi superlu_dist 
             sudo pacman -S git --noconfirm >/dev/null 2>&1
             cd
             git clone https://aur.archlinux.org/petsc.git
