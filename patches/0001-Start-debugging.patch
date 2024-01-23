@@ -54,6 +54,7 @@ index 635b928..f19c61a 100644
  
    CONFOPTS="--with-shared-libraries=1 \
 +            --with-debugging=1 \
++            --with-valgrind=1 \
              --with-petsc4py=1 \
              --with-mpi-f90module-visibility=0 \
              --with-mpi-dir=/usr \
