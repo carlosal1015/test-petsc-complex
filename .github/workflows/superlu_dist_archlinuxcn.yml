@@ -1,4 +1,4 @@
-name: Test PETSc on GitHub with archlinuxcn repository
+name: PETSc with superlu_dist from archlinuxcn repository
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Test PETSc on GitHub with archlinuxcn repository
+name: PETSc with mumps from archlinuxcn repository
 
 on:
   push:

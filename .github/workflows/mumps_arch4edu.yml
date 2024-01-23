@@ -1,4 +1,4 @@
-name: Test PETSc on GitHub with arch4edu repository
+name: PETSc with mumps from arch4edu repository
 
 on:
   push:

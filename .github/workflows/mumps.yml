@@ -1,4 +1,4 @@
-name: Test PETSc on GitHub with mumps
+name: PETSc with mumps
 
 on:
   push:
