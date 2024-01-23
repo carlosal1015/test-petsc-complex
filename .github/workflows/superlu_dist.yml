@@ -31,5 +31,6 @@ jobs:
             pushd /tmp/makepkg/petsc/src/petsc-3.20.3/src/snes/tutorials
             make testex19
             /usr/bin/mpiexec -n 1 --oversubscribe ./ex19 -da_grid_x 20 -da_grid_y 20 -pc_type lu -pc_factor_mat_solver_type superlu_dist
+            cat output/ex19_superlu.out
             popd
             cat /tmp/makepkg/petsc/src/petsc-3.20.3/arch-linux-c-opt/lib/petsc/conf/configure.log
