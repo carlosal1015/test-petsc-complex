@@ -1,4 +1,4 @@
-name: PETSc with superlu_dist from archlinuxcn repository
+name: PETSc with SuperLU_DIST, dependencies are from archlinuxcn repository
 
 on:
   push:

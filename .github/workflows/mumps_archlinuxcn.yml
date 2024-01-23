@@ -1,4 +1,4 @@
-name: PETSc with mumps from archlinuxcn repository
+name: PETSc with MUMPS, dependencies are from archlinuxcn repository
 
 on:
   push:

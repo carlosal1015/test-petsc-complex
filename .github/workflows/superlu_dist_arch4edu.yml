@@ -1,4 +1,4 @@
-name: PETSc with superlu_dist from arch4edu repository
+name: PETSc with SuperLU_DIST, dependencies are from arch4edu repository
 
 on:
   push:

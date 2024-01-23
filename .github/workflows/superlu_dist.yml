@@ -1,4 +1,4 @@
-name: PETSc with superlu_dist
+name: PETSc with SuperLU_DIST
 
 on:
   push:

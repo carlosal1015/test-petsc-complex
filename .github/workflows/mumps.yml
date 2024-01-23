@@ -1,4 +1,4 @@
-name: PETSc with mumps
+name: PETSc with MUMPS
 
 on:
   push:
