@@ -1,6 +1,6 @@
-From 60b622effb47ede71a5a37461c9bd9af5b50c7b7 Mon Sep 17 00:00:00 2001
+From f051f9bc0795f3d6d668a3fe1b9fa3fa8a26396d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Carlos=20Aznar=C3=A1n?= <caznaranl@uni.pe>
-Date: Tue, 23 Jan 2024 10:27:08 -0500
+Date: Tue, 23 Jan 2024 12:47:31 -0500
 Subject: [PATCH] Start debugging
 
 ---
@@ -8,15 +8,15 @@ Subject: [PATCH] Start debugging
  1 file changed, 12 insertions(+), 5 deletions(-)
 
 diff --git a/PKGBUILD b/PKGBUILD
-index 1ff0b9b..e793f25 100644
+index 635b928..f19c61a 100644
 --- a/PKGBUILD
 +++ b/PKGBUILD
 @@ -3,12 +3,12 @@
  # Contributor: Myles English <myles at rockhead dot biz>
  # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
  pkgver=3.20.3
--pkgrel=3
-+pkgrel=4
+-pkgrel=4
++pkgrel=5
  pkgname=petsc
 -_config=linux-c-opt
 +# _config=linux-c-opt
@@ -27,7 +27,7 @@ index 1ff0b9b..e793f25 100644
  pkgdesc="Portable, extensible toolkit for scientific computation"
  arch=('i686' 'x86_64')
  url="https://petsc.org"
-@@ -32,13 +32,19 @@ optdepends=('trilinos: support for trilinos'
+@@ -31,13 +31,19 @@ optdepends=('trilinos: support for trilinos'
  
  install=petsc.install
  source=(http://web.cels.anl.gov/projects/petsc/download/release-snapshots/${pkgname}-${pkgver}.tar.gz
@@ -49,7 +49,7 @@ index 1ff0b9b..e793f25 100644
  
  build() {
    _build_dir=${srcdir}/${pkgname}-${pkgver}
-@@ -48,6 +54,7 @@ build() {
+@@ -47,6 +53,7 @@ build() {
    export PETSC_DIR=${_build_dir}
  
    CONFOPTS="--with-shared-libraries=1 \
