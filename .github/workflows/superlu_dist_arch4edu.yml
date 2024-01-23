@@ -1,0 +1,36 @@
+name: Test PETSc on GitHub with arch4edu repository
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: addnab/docker-run-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ghcr.io
+          image: ghcr.io/cpp-review-dune/introductory-review/aur:latest
+          options: |
+            -v ${{github.workspace}}:/work
+          shell: bash
+          run: |
+            curl -s https://gitlab.com/dune-archiso/dune-archiso.gitlab.io/-/raw/main/templates/add_arch4edu.sh | bash
+            sudo pacman -Syuq --needed --noconfirm
+            # fftw hypre metis parmetis suitesparse hdf5-openmpi triangle pastix scotch valgrind | mumps
+            sudo pacman -S superlu_dist --noconfirm
+            yay -G aur/petsc
+            cd petsc
+            git config --global user.email github-actions@github.com
+            git config --global user.name github-actions
+            curl -O https://raw.githubusercontent.com/carlosal1015/test-petsc-complex/main/patches/0001-Start-debugging.patch
+            git am --signoff < 0001-Start-debugging.patch
+            makepkg --noconfirm -s
+            pushd /tmp/makepkg/petsc/src/petsc-3.20.3/src/snes/tutorials
+            make testex19
+            /usr/bin/mpiexec -n 1 --oversubscribe ./ex19 -da_grid_x 20 -da_grid_y 20 -pc_type lu -pc_factor_mat_solver_type superlu_dist
+            popd
