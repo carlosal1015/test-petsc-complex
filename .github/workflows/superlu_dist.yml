@@ -3,8 +3,8 @@ name: PETSc with SuperLU_DIST
 on:
   push:
     branches: [main]
-    paths:
-      - patches/*
+    # paths:
+    #   - patches/*
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
           shell: bash
           run: |
             sudo pacman -Syuq --needed --noconfirm >/dev/null 2>&1
-            pacman -Qi superlu_dist 
+            pacman -Qi parmetis-git superlu_dist
             sudo pacman -S git --noconfirm >/dev/null 2>&1
             cd
             git clone https://aur.archlinux.org/petsc.git

@@ -23,7 +23,7 @@ jobs:
           run: |
             curl -s https://gitlab.com/dune-archiso/dune-archiso.gitlab.io/-/raw/main/templates/add_arch4edu.sh | bash
             sudo pacman -Syuq --needed --noconfirm >/dev/null 2>&1
-            sudo pacman -S git superlu_dist --noconfirm
+            sudo pacman -S git parmetis-git superlu_dist --noconfirm
             cd
             git clone https://aur.archlinux.org/petsc.git
             cd petsc
