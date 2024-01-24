@@ -20,7 +20,7 @@ jobs:
           shell: bash
           run: |
             curl -s https://gitlab.com/dune-archiso/dune-archiso.gitlab.io/-/raw/main/templates/add_arch4edu.sh | bash
-            sudo pacman -Syuq --needed --noconfirm
+            sudo pacman -Syuq --needed --noconfirm >/dev/null 2>&1
             # fftw hypre metis parmetis suitesparse hdf5-openmpi triangle pastix scotch valgrind | superlu_dist
             sudo pacman -S mumps --noconfirm
             yay -G aur/petsc

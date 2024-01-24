@@ -22,7 +22,7 @@ jobs:
           shell: bash
           run: |
             curl -s https://gitlab.com/dune-archiso/dune-archiso.gitlab.io/-/raw/main/templates/add_archlinuxcn.sh | bash
-            sudo pacman -Syuq --needed --noconfirm
+            sudo pacman -Syuq --needed --noconfirm >/dev/null 2>&1
             # TODO: inetutils
             # FIXME: Unable to find superlu_dist in default locations!
             # valgrind
