@@ -3,8 +3,8 @@ name: PETSc with MUMPS
 on:
   push:
     branches: [main]
-    # paths:
-    #   - patches/*
+    paths:
+      - patches/*
 
 jobs:
   build:

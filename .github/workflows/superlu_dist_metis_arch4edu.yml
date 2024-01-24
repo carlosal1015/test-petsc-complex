@@ -3,8 +3,8 @@ name: PETSc with SuperLU_DIST, dependencies are from arch4edu repository, except
 on:
   push:
     branches: [main]
-    # paths:
-    #   - patches/*
+    paths:
+      - patches/*
 
 jobs:
   build:

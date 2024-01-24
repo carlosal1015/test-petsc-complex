@@ -3,8 +3,8 @@ name: PETSc with MUMPS, dependencies are from arch4edu repository, except ScaLAP
 on:
   push:
     branches: [main]
-    # paths:
-    #   - patches/*
+    paths:
+      - patches/*
 
 jobs:
   build:
