@@ -1,10 +1,10 @@
-name: PETSc (real scalar) with SuperLU_DIST
+name: PETSc (real scalar)
 
 on:
   push:
     branches: [main]
-    paths:
-      - patches/*
+    # paths:
+    #   - patches/*
 
 jobs:
   build:
@@ -16,21 +16,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ghcr.io
-          image: ghcr.io/carlosal1015/aur/superlu_dist:latest
+          image: ghcr.io/cpp-review-dune/introductory-review/aur
           options: |
             -v ${{github.workspace}}:/work
           shell: bash
           run: |
             sudo pacman -Syuq --needed --noconfirm >/dev/null 2>&1
-            pacman -Qi parmetis-git superlu_dist
             sudo pacman -S git --noconfirm >/dev/null 2>&1
             cd
             git clone https://aur.archlinux.org/petsc.git
             cd petsc
-            makepkg --noconfirm -s
+            makepkg --noconfirm --nocheck -s
             pushd /tmp/makepkg/petsc/src/petsc-3.20.4/src/snes/tutorials
             make testex19
-            /usr/bin/mpiexec -n 1 --oversubscribe ./ex19 -da_grid_x 20 -da_grid_y 20 -pc_type lu -pc_factor_mat_solver_type superlu_dist
-            cat output/ex19_superlu.out
+            /usr/bin/mpiexec -n 1 --oversubscribe ./ex19 -da_refine 3 -pc_type mg -ksp_type fgmres
+            cat output/ex19_1.testout
             popd
             cat /tmp/makepkg/petsc/src/petsc-3.20.4/arch-linux-c-opt/lib/petsc/conf/configure.log
