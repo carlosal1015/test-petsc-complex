@@ -1,4 +1,4 @@
-name: PETSc with MUMPS, dependencies are from archlinuxcn repository
+name: PETSc (real scalar) with MUMPS, dependencies are from [archlinuxcn]
 
 on:
   push:

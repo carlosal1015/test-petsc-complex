@@ -1,0 +1,38 @@
+name: PETSc (real scalar) with MUMPS, dependencies are from [arch4edu]
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - patches/*
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: addnab/docker-run-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ghcr.io
+          image: ghcr.io/cpp-review-dune/introductory-review/aur:latest
+          options: |
+            -v ${{github.workspace}}:/work
+          shell: bash
+          run: |
+            curl -s https://gitlab.com/dune-archiso/dune-archiso.gitlab.io/-/raw/main/templates/add_arch4edu.sh | bash
+            sudo pacman -Syuq --needed --noconfirm >/dev/null 2>&1
+            # fftw hypre metis parmetis suitesparse hdf5-openmpi triangle pastix scotch valgrind | superlu_dist
+            sudo pacman -S mumps --noconfirm
+            yay -G aur/petsc
+            cd petsc
+            git config --global user.email github-actions@github.com
+            git config --global user.name github-actions
+            curl -O https://raw.githubusercontent.com/carlosal1015/test-petsc-complex/main/patches/0001-Start-debugging.patch
+            git am --signoff < 0001-Start-debugging.patch
+            makepkg --noconfirm -s
+            pushd /tmp/makepkg/petsc/src/petsc-3.20.3/src/snes/tutorials
+            make testex19
+            /usr/bin/mpiexec -n 2 --oversubscribe ./ex19 -pc_type fieldsplit -pc_fieldsplit_block_size 4 -pc_fieldsplit_type SCHUR -pc_fieldsplit_0_fields 0,1,2 -pc_fieldsplit_1_fields 3 -fieldsplit_0_pc_type lu -fieldsplit_1_pc_type lu -snes_monitor_short -ksp_monitor_short  -fieldsplit_0_pc_factor_mat_solver_type mumps -fieldsplit_1_pc_factor_mat_solver_type mumps
+            popd

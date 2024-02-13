@@ -1,4 +1,4 @@
-name: PETSc with MUMPS, dependencies are from arch4edu repository, except GKlib
+name: PETSc (real scalar) with MUMPS, dependencies are from [arch4edu] except GKlib
 
 on:
   push:
