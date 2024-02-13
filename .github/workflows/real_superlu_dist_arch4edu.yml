@@ -32,7 +32,7 @@ jobs:
             curl -O https://raw.githubusercontent.com/carlosal1015/test-petsc-complex/main/patches/0001-Start-debugging.patch
             git am --signoff < 0001-Start-debugging.patch
             makepkg --noconfirm -s
-            pushd /tmp/makepkg/petsc/src/petsc-3.20.3/src/snes/tutorials
+            pushd /tmp/makepkg/petsc/src/petsc-3.20.4/src/snes/tutorials
             make testex19
             /usr/bin/mpiexec -n 1 --oversubscribe ./ex19 -da_grid_x 20 -da_grid_y 20 -pc_type lu -pc_factor_mat_solver_type superlu_dist
             popd
