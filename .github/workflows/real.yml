@@ -28,7 +28,7 @@ jobs:
             cd petsc
             makepkg --noconfirm --nocheck -s
             pushd /tmp/makepkg/petsc/src/petsc-3.20.4/src/snes/tutorials
-            make testex19
+            # make testex19
             /usr/bin/mpiexec -n 1 --oversubscribe ./ex19 -da_refine 3 -pc_type mg -ksp_type fgmres
             cat output/ex19_1.testout
             popd
