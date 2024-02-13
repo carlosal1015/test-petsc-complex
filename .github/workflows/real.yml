@@ -28,9 +28,9 @@ jobs:
             cd petsc
             makepkg --noconfirm --nocheck -s
             pushd /tmp/makepkg/petsc/src/petsc-3.20.4/src/snes/tutorials
-            curl -O https://gist.githubusercontent.com/carlosal1015/e363d2db05685b7d2a3e85ca9a00560f/raw/413ef1476f7d00188d6576ea42b6e4362c0a8444/gistfile1.sh
-            chmod +x gistfile1.sh
-            ./gistfile1.sh
+            ls -l
+            chmod +x ex19
+            ls -l
             # make testex19
             /usr/bin/mpiexec -n 1 --oversubscribe ./ex19 -da_refine 3 -pc_type mg -ksp_type fgmres
             cat output/ex19_1.testout
