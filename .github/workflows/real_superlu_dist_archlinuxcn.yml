@@ -3,8 +3,8 @@ name: PETSc (real scalar) with SuperLU_DIST, dependencies are from [archlinuxcn]
 on:
   push:
     branches: [main]
-    paths:
-      - patches/*
+    # paths:
+    #   - patches/*
 
 jobs:
   build:
