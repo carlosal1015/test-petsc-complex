@@ -6,9 +6,9 @@ In order to use `triangle` mesh generator, the user could face this follow situa
 
 | `triangle` was installed ... compilation | feature `triangle` for `petsc-complex` status | `petsc-complex` status |
 | :--------------------------------------- | :-------------------------------------------: | :--------------------: |
-| before (`automagicdepends`)              |                      ✅                       |           ✅           |
-| between (`makedepends`)                  |                      ❌                       |           ✅           |
-| after (`optdepends`)                     |                      ❌                       |           ✅           |
+| before (`automagicdepends`)              |                       ✅                       |           ✅            |
+| between (`makedepends`)                  |                       ❌                       |           ✅            |
+| after (`optdepends`)                     |                       ❌                       |           ✅            |
 
 **Therefore, `triangle` is a `makedepends` and an `optdepends`, but not an `automagicdepends`**.
 
@@ -18,9 +18,9 @@ In order to use `hdf5-openmpi` file format, the user could face this follow situ
 
 | `hdf5-openmpi` was installed ... compilation | feature `hdf5-openmpi` for `petsc-complex` status | `petsc-complex` status |
 | :------------------------------------------- | :-----------------------------------------------: | :--------------------: |
-| before (`automagicdepends`)                  |                                                   |           ✅           |
-| between (`makedepends`)                      |                                                   |           ✅           |
-| after (`optdepends`)                         |                                                   |           ✅           |
+| before (`automagicdepends`)                  |                                                   |           ✅            |
+| between (`makedepends`)                      |                                                   |           ✅            |
+| after (`optdepends`)                         |                                                   |           ✅            |
 
 <!-- **Therefore, `hdf5-openmpi` is a `makedepends` and an `optdepends`, but not an `automagicdepends`**. -->
 
@@ -30,9 +30,9 @@ In order to use `p4est-deal-ii` for manage forest of octrees, the user could fac
 
 | `p4est-deal-ii` was installed ... compilation | feature `p4est-deal-ii` for `petsc-complex` status | `petsc-complex` status |
 | :-------------------------------------------- | :------------------------------------------------: | :--------------------: |
-| before (`automagicdepends`)                   |                                                    |           ✅           |
-| between (`makedepends`)                       |                                                    |           ✅           |
-| after (`optdepends`)                          |                                                    |           ✅           |
+| before (`automagicdepends`)                   |                                                    |           ✅            |
+| between (`makedepends`)                       |                                                    |           ✅            |
+| after (`optdepends`)                          |                                                    |           ✅            |
 
 <!-- **Therefore, `p4est-deal-ii` is a `makedepends` and an `optdepends`, but not an `automagicdepends`**. -->
 

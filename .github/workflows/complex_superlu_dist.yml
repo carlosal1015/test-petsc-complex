@@ -28,9 +28,9 @@ jobs:
             git clone https://aur.archlinux.org/petsc-complex.git
             cd petsc-complex
             makepkg --noconfirm -s
-            pushd /tmp/makepkg/petsc-complex/src/petsc-3.20.4/src/snes/tutorials
+            pushd /tmp/makepkg/petsc-complex/src/petsc-3.20.5/src/snes/tutorials
             make testex19
             /usr/bin/mpiexec -n 1 --oversubscribe ./ex19 -da_grid_x 20 -da_grid_y 20 -pc_type lu -pc_factor_mat_solver_type superlu_dist
             cat output/ex19_superlu.out
             popd
-            cat /tmp/makepkg/petsc-complex/src/petsc-3.20.4/arch-linux-c-opt/lib/petsc/conf/configure.log
+            cat /tmp/makepkg/petsc-complex/src/petsc-3.20.5/arch-linux-c-opt/lib/petsc/conf/configure.log
