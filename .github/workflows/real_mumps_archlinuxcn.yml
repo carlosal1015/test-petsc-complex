@@ -3,8 +3,8 @@ name: PETSc (real scalar) with MUMPS, dependencies are from [archlinuxcn]
 on:
   push:
     branches: [main]
-    paths:
-      - patches/*
+    # paths:
+    #   - patches/*
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
           shell: bash
           run: |
             curl -s https://gitlab.com/dune-archiso/dune-archiso.gitlab.io/-/raw/main/templates/add_archlinuxcn.sh | bash
-            sudo pacman -Syuq --needed --noconfirm >/dev/null 2>&1
+            sudo pacman -Syuq --needed --noconfirm #>/dev/null 2>&1
             # TODO: inetutils
             # FIXME: Unable to find mumps in default locations!
             # valgrind

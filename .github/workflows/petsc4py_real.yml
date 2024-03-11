@@ -1,0 +1,32 @@
+name: PETSc (real scalar)
+
+on:
+  push:
+    branches: [main]
+    # paths:
+    #   - patches/*
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: addnab/docker-run-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ghcr.io
+          image: ghcr.io/carlosal1015/aur/petsc:latest
+          options: |
+            -v ${{github.workspace}}:/work
+          shell: bash
+          run: |
+            sudo pacman -Syuq --needed --noconfirm >/dev/null 2>&1
+            cd
+            curl -O https://petsc.org/release/petsc4py/_static/poisson2d.py
+            mpiexec -n 2 python poisson2d.py -view_sol -view_mat -n 10 -ksp_type preonly
+            # https://groups.google.com/g/moose-users/c/PSO8iNMZ3Qg
+            # https://stackoverflow.com/a/26535447/9302545
+            # https://fenicsproject.discourse.group/t/set-solvertype-superlu-instead-of-superlu-dist-for-a-petsc-matrix-of-type-seqaij/11185/3
+            python poisson2d.py -view_sol -view_mat -n 10 -ksp_type preonly -pc_type lu
+            # https://petsc4py.readthedocs.io/en/stable/manual/ksp -pc_factor_mat_solver_type mumps
