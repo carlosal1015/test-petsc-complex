@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ghcr.io
-          image: ghcr.io/carlosal1015/aur/petsc:latest
+          image: ghcr.io/carlosal1015/aur/petsc-complex:latest
           options: |
             -v ${{github.workspace}}:/work
           shell: bash
