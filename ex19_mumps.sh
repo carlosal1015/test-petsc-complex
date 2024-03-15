@@ -10,7 +10,6 @@ cd petsc
 makepkg --noconfirm -s
 
 # https://gitlab.com/petsc/petsc/-/blob/v3.20.3/src/snes/tutorials/makefile#L94
-# export OMPI_MCA_opal_warn_on_missing_libcuda=0
 # export PETSC_DIR=/opt/petsc/linux-c-opt
 # export PYTHONPATH=${PETSC_DIR}/lib:${PYTHONPATH}
 

@@ -10,7 +10,7 @@ function install_namcap() {
 function namcaping() {
   export PETSC_DIR=/opt/petsc/linux-c-opt
   export PYTHONPATH=/opt/petsc/linux-c-opt/lib:${PYTHONPATH}
-  namcap /tmp/petsc-complex-3.20.3-1-x86_64.pkg.tar.zst >>/tmp/log.txt
+  namcap /tmp/petsc-complex-3.20.5-2-x86_64.pkg.tar.zst >>/tmp/log.txt
 }
 
 function ldding() {
