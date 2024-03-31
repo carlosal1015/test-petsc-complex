@@ -15,7 +15,7 @@ index 0ce4a66..ade8e4e 100644
 @@ -1,7 +1,7 @@
  pkgbase = petsc
  	pkgdesc = Portable, extensible toolkit for scientific computation
- 	pkgver = 3.20.5
+ 	pkgver = 3.21.0
 -	pkgrel = 2
 +	pkgrel = 3
  	url = https://petsc.org
@@ -28,7 +28,7 @@ index b442f25..b9976fb 100644
 @@ -3,12 +3,12 @@
  # Contributor: Myles English <myles at rockhead dot biz>
  # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
- pkgver=3.20.5
+ pkgver=3.21.0
 -pkgrel=2
 +pkgrel=3
  pkgname=petsc

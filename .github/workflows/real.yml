@@ -27,7 +27,7 @@ jobs:
             git clone https://aur.archlinux.org/petsc.git
             cd petsc
             makepkg --noconfirm --nocheck -s
-            pushd /tmp/makepkg/petsc/src/petsc-3.20.5/src/snes/tutorials
+            pushd /tmp/makepkg/petsc/src/petsc-3.21.0/src/snes/tutorials
             ls -l
             chmod +x ex19
             ls -l
@@ -35,4 +35,4 @@ jobs:
             /usr/bin/mpiexec -n 1 --oversubscribe ./ex19 -da_refine 3 -pc_type mg -ksp_type fgmres
             cat output/ex19_1.testout
             popd
-            cat /tmp/makepkg/petsc/src/petsc-3.20.5/arch-linux-c-opt/lib/petsc/conf/configure.log
+            cat /tmp/makepkg/petsc/src/petsc-3.21.0/arch-linux-c-opt/lib/petsc/conf/configure.log
